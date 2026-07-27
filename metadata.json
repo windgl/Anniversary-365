@@ -1,0 +1,6 @@
+{
+  "name": "Anniversary 365",
+  "description": "A 365-day love anniversary web project",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

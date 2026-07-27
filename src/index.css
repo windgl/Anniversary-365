@@ -1,0 +1,646 @@
+@import "tailwindcss";
+
+/* ==========================================================
+   CẤU HÌNH THEME CHO TAILWIND V4
+   =========================================================== */
+@theme {
+  --font-playfair: 'Playfair Display', serif;
+  --font-cormorant: 'Cormorant Garamond', serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+  --font-lora: 'Lora', serif;
+  --color-cream: #fdfbf7;
+  --color-pink-soft: #fbcfe8;
+  --color-blue-soft: #bae6fd;
+}
+
+/* ==========================================================
+   1. KHAI BÁO FONT (VARIABLE FONTS)
+   =========================================================== */
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/fonts/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================
+   2. BIẾN CSS ROOT (MÀU SẮC LÃNG MẠN & CHỦ ĐỀ)
+   =========================================================== */
+:root {
+  --bg-dark: #0a0a0a;
+  --text-cream: #fdfbf7;
+  --text-pink: #fbcfe8;
+  --text-blue: #bae6fd;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.12);
+
+  /* Màu chủ đề riêng cho từng section */
+  --ocean-deep: #0b1e33;
+  --ocean-surface: #0f2b4a;
+  --ocean-glow: #38bdf8;
+  --grass-base: #022c22;
+  --grass-highlight: #4ade80;
+  --sky-top: #38bdf8;
+  --sky-bottom: #f0f9ff;
+  --space-bg: #090a0f;
+  --space-star: #ffffff;
+}
+
+/* ==========================================================
+   3. TOÀN BỘ TRANG & CHẶN BÔI ĐEN
+   =========================================================== */
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-dark);
+  color: var(--text-cream);
+  overflow-x: hidden;
+  cursor: none;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Chỉ cho phép bôi đen ở vùng thư tình */
+.selectable {
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+/* ==========================================================
+   4. XÓA THANH CUỘN MẶC ĐỊNH CỦA TRÌNH DUYỆT
+   =========================================================== */
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  scrollbar-width: none;
+}
+
+/* ==========================================================
+   5. UTILITY CLASSES (GLASSMORPHISM & CINEMATIC)
+   =========================================================== */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.45);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.cinematic {
+  filter: brightness(0.85) contrast(1.15) sepia(0.2) blur(3px);
+  transition: filter 0.5s ease-in-out, transform 0.5s ease;
+}
+
+.cinematic:hover {
+  filter: brightness(1.05) contrast(1) sepia(0) blur(0px);
+  transform: scale(1.02);
+}
+
+/* ==========================================================
+   6. HIỆU ỨNG FADE-UP KHI CUỘN
+   =========================================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==========================================================
+   7. GRADIENT MASK CHUYỂN CẢNH MƯỢT MÀ GIỮA CÁC SECTION (Đã loại bỏ theo yêu cầu)
+   =========================================================== */
+.section-transition-top {
+  position: relative;
+}
+
+/* ==========================================================
+   8. HIỆU ỨNG CON TRỎ & HOẠT ẢNH CƠ BẢN
+   =========================================================== */
+.cursor-dot,
+.cursor-trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--text-pink);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px var(--text-pink);
+}
+
+/* ==========================================================
+   9. HERO COUNTER BACKGROUND
+   =========================================================== */
+.hero-counter-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scaleY(1.5);
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(4.8rem, 16vw, 16rem);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+  line-height: 1;
+  text-shadow: 0 0 30px rgba(255,255,255,0.05);
+  filter: blur(3px);
+}
+
+/* ==========================================================
+   10. TIMELINE DỌC (GIỮ LẠI ĐỂ TƯƠNG THÍCH NGƯỢC)
+   =========================================================== */
+.timeline-vertical {
+  position: relative;
+  padding: 2rem 0;
+}
+
+.timeline-vertical::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.3), transparent);
+  transform: translateX(-50%);
+}
+
+.timeline-vertical-item {
+  position: relative;
+  width: 50%;
+  padding: 2rem 2.5rem;
+  box-sizing: border-box;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.timeline-vertical-item:nth-child(odd) {
+  left: 0;
+  text-align: right;
+  padding-right: calc(2.5rem + 20px);
+}
+
+.timeline-vertical-item:nth-child(even) {
+  left: 50%;
+  text-align: left;
+  padding-left: calc(2.5rem + 20px);
+}
+
+.timeline-vertical-item::before {
+  content: '';
+  position: absolute;
+  top: 2.5rem;
+  width: 16px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 3px solid #f472b6;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(244, 114, 182, 0.7);
+  z-index: 10;
+}
+
+.timeline-vertical-item:nth-child(odd)::before {
+  right: -8px;
+}
+
+.timeline-vertical-item:nth-child(even)::before {
+  left: -8px;
+}
+
+.timeline-content {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.timeline-date {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  color: #f472b6;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fdfbf7;
+}
+
+/* ==========================================================
+   11. BẢN ĐỒ SAO THỰC TẾ (SPACE)
+   =========================================================== */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes shootingStar {
+  0% {
+    transform: translate(0, 0) rotate(-30deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-400px, 500px) rotate(-30deg);
+    opacity: 0;
+  }
+}
+
+.starfield-realistic {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
+}
+
+.starfield-realistic .star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--duration) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+.shooting-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px white;
+  animation: shootingStar 1.5s ease-out forwards;
+}
+
+.milky-way {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 40% 60%, rgba(255, 255, 255, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse at 60% 40%, rgba(200, 200, 255, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 90%);
+  transform: rotate(-10deg);
+  pointer-events: none;
+}
+
+/* Hiệu ứng 3D cho star map */
+.perspective-3d {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* ==========================================================
+   12. CANVAS VẼ TO (SPACE)
+   =========================================================== */
+.canvas-full {
+  width: 100%;
+  height: 70vh;
+  cursor: crosshair;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 1rem;
+  background: rgba(0,0,0,0.2);
+  touch-action: none;
+}
+
+/* ==========================================================
+   13. NÚT CHỈNH ÂM LƯỢNG (BGM PLAYER)
+   =========================================================== */
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+  transition: background 0.2s;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #f472b6;
+  border: 2px solid white;
+  box-shadow: 0 0 10px rgba(244, 114, 182, 0.7);
+  cursor: pointer;
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #f472b6;
+  border: 2px solid white;
+  box-shadow: 0 0 10px rgba(244, 114, 182, 0.7);
+  cursor: pointer;
+}
+
+/* ==========================================================
+   14. GALLERY CHIIKAWA (DÙNG CHUNG)
+   =========================================================== */
+.chiikawa-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.chiikawa-item {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: float 4s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+.chiikawa-item:hover {
+  transform: scale(1.1) rotate(3deg);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ==========================================================
+   15. HIỆU ỨNG CHỮ GỢN SÓNG (OCEAN)
+   =========================================================== */
+@keyframes text-ripple {
+  0%, 100% {
+    text-shadow: 0 0 4px rgba(56, 189, 248, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 18px rgba(56, 189, 248, 0.9);
+    transform: scale(1.02);
+  }
+}
+
+.water-text-hover:hover {
+  animation: text-ripple 2s infinite ease-in-out;
+  color: #bae6fd;
+}
+
+/* ==========================================================
+   16. MÂY TRÔI (SKY)
+   =========================================================== */
+@keyframes cloud-drift {
+  0% { transform: translateX(120vw); }
+  100% { transform: translateX(-50vw); }
+}
+
+.animate-cloud-slow {
+  animation: cloud-drift 45s linear infinite;
+}
+
+.animate-cloud-medium {
+  animation: cloud-drift 25s linear infinite;
+}
+
+.animate-cloud-fast {
+  animation: cloud-drift 15s linear infinite;
+}
+
+/* ==========================================================
+   17. ĐÀN CHIM BAY (SKY)
+   =========================================================== */
+@keyframes bird-fly {
+  0% { transform: translateX(-200px) translateY(0); }
+  100% { transform: translateX(calc(100vw + 200px)) translateY(-40px); }
+}
+
+.animate-bird-fly {
+  animation: bird-fly 14s linear infinite;
+}
+
+/* ==========================================================
+   18. NÚT KHINH KHÍ CẦU LẮC LƯ
+   =========================================================== */
+@keyframes float-balloon {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(2deg); }
+}
+
+.balloon-float {
+  animation: float-balloon 4s ease-in-out infinite;
+}
+
+/* ==========================================================
+   19. ĐOM ĐÓM / PHẤN HOA BAY (GRASS)
+   =========================================================== */
+@keyframes float-firefly {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-105vh) translateX(var(--drift, 20px));
+    opacity: 0;
+  }
+}
+
+/* ==========================================================
+   20. TƯƠNG TÁC KÉO THẢ & UPLOAD CANVAS
+   =========================================================== */
+.upload-board {
+  touch-action: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.upload-board img {
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Hiệu ứng viền sáng cho upload board */
+.upload-board-glow {
+  box-shadow: 0 0 30px rgba(236, 72, 153, 0.2), inset 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================
+   21. HIỆU ỨNG CHUNG DỄ THƯƠNG
+   =========================================================== */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  75% { transform: rotate(-1deg); }
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(255, 105, 180, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.8); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes float-up-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float-up-down 4s ease-in-out infinite;
+}
+
+/* ==========================================================
+   22. RESPONSIVE
+   =========================================================== */
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .section-transition-top::before,
+  .section-transition-bottom::after {
+    height: 4rem;
+  }
+
+  .timeline-vertical::before {
+    left: 1rem;
+  }
+
+  .timeline-vertical-item {
+    width: 100%;
+    padding-left: 3rem !important;
+    padding-right: 1rem !important;
+    text-align: left !important;
+    left: 0 !important;
+  }
+
+  .timeline-vertical-item::before {
+    left: 0.5rem !important;
+    right: auto !important;
+  }
+
+  .chiikawa-item {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* ==========================================================
+   23. TỐI ƯU HIỆU NĂNG RENDER CHẬM
+   =========================================================== */
+.heavy-render {
+  content-visibility: auto;
+  contain-intrinsic-size: 180px 120px;
+  will-change: transform, opacity;
+}
+
+.pause-animations, .pause-animations * {
+  animation-play-state: paused !important;
+  will-change: auto !important;
+}
+
+/* Thêm content-visibility cho các khối chứa nội dung lớn */
+.section-heavy {
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
+}
