@@ -30,29 +30,54 @@ export default function HandTrackerIntro({ onComplete }) {
   const audioUnlockedRef = useRef(false);
 
   useEffect(() => {
-    ambientAudioRef.current = new Audio('/audio/ambient/space-hum.mp3');
-    ambientAudioRef.current.loop = true;
-    ambientAudioRef.current.volume = 0.5;
-    ambientAudioRef.current.play().catch(e => console.log('Autoplay prevented:', e));
+    if (!ambientAudioRef.current) {
+      ambientAudioRef.current = new Audio('./audio/ambient/space-hum.mp3');
+      ambientAudioRef.current.loop = true;
+      ambientAudioRef.current.volume = 0.5;
+    }
 
-    transitionAudioRef.current = new Audio('/audio/sfx/lantern-release.mp3');
-    transitionAudioRef.current.volume = 0.7;
+    if (!transitionAudioRef.current) {
+      transitionAudioRef.current = new Audio('./audio/sfx/lantern-release.mp3');
+      transitionAudioRef.current.volume = 0.7;
+    }
 
-    hoverAudioRef.current = new Audio('/audio/sfx/word-chime.mp3');
-    hoverAudioRef.current.volume = 0.6;
+    if (!hoverAudioRef.current) {
+      hoverAudioRef.current = new Audio('./audio/sfx/word-chime.mp3');
+      hoverAudioRef.current.volume = 0.6;
+    }
 
     const unlockAudio = () => {
       if (!audioUnlockedRef.current) {
         if (ambientAudioRef.current) {
-          ambientAudioRef.current.play().then(() => {
-            audioUnlockedRef.current = true;
-            window.removeEventListener('click', unlockAudio);
-            window.removeEventListener('touchstart', unlockAudio);
-            window.removeEventListener('keydown', unlockAudio);
-          }).catch(e => console.log('Unlock failed:', e));
+          const playPromise = ambientAudioRef.current.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              audioUnlockedRef.current = true;
+              
+              // Silently unlock other audio elements to bypass iOS/Safari restrictions
+              if (transitionAudioRef.current) {
+                transitionAudioRef.current.play().then(() => {
+                  transitionAudioRef.current.pause();
+                  transitionAudioRef.current.currentTime = 0;
+                }).catch(() => {});
+              }
+              if (hoverAudioRef.current) {
+                hoverAudioRef.current.play().then(() => {
+                  hoverAudioRef.current.pause();
+                  hoverAudioRef.current.currentTime = 0;
+                }).catch(() => {});
+              }
+
+              window.removeEventListener('click', unlockAudio);
+              window.removeEventListener('touchstart', unlockAudio);
+              window.removeEventListener('keydown', unlockAudio);
+            }).catch(e => console.log('Unlock failed:', e));
+          }
         }
       }
     };
+
+    unlockAudio(); // Try immediately since user already clicked "Bắt đầu"
 
     window.addEventListener('click', unlockAudio);
     window.addEventListener('touchstart', unlockAudio);

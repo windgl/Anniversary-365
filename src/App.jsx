@@ -78,6 +78,7 @@ const SectionContainer = ({ children, className = '', placeholderHeight = 'min-h
 
 import { MouseTrackerProvider } from './contexts/MouseTrackerContext';
 import HandTrackerIntro from './components/HandTrackerIntro';
+import StartScreen from './components/StartScreen';
 
 // ──────────────────────────────────────────────
 // App chính – Thứ tự:
@@ -86,6 +87,7 @@ import HandTrackerIntro from './components/HandTrackerIntro';
 // (Dòng thời gian đã được merge vào từng section)
 // ──────────────────────────────────────────────
 const App = () => {
+  const [startClicked, setStartClicked] = useState(false);
   const [introDone, setIntroDone] = useState(false);
 
   useEffect(() => {
@@ -109,6 +111,10 @@ const App = () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
+
+  if (!startClicked) {
+    return <StartScreen onStart={() => setStartClicked(true)} />;
+  }
 
   if (!introDone) {
     return <HandTrackerIntro onComplete={() => setIntroDone(true)} />;
