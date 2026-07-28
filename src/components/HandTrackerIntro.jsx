@@ -219,15 +219,15 @@ export default function HandTrackerIntro({ onComplete }) {
     let shadowColor = '#cbd5e1';
 
     if (state === 1) {
-      points = getTextCoordinates('1');
+      points = getTextCoordinates('anh');
       color = '#fbbf24'; 
       shadowColor = '#f59e0b';
     } else if (state === 2) {
-      points = getTextCoordinates('2');
+      points = getTextCoordinates('yêu');
       color = '#22d3ee'; 
       shadowColor = '#06b6d4';
     } else if (state === 3) {
-      points = getTextCoordinates('3');
+      points = getTextCoordinates('em');
       color = '#e879f9'; 
       shadowColor = '#d946ef';
     } else if (state === 4) {
@@ -679,7 +679,7 @@ export default function HandTrackerIntro({ onComplete }) {
               className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 pointer-events-none w-full px-4 text-center"
            >
               <p className="text-[#fdfbf7] opacity-30 text-sm md:text-base tracking-wide whitespace-nowrap">
-                Hãy giơ bàn tay lên và từ từ đếm từ 0 đến 5 nhé
+                Em hãy giơ bàn tay lên và từ từ đếm từ 0 đến 5 nhé (nếu tính năng hog hoạt động thì em nhấn F5 nho)
               </p>
            </motion.div>
         )}
